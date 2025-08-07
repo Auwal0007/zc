@@ -1,0 +1,49 @@
+[build]
+  publish = "dist/public"
+  command = "npm ci && node scripts/generateStaticContent.js && cp -r src/data client/src/ && npm run build:client && npm run build:function"
+
+[build.environment]
+  NODE_VERSION = "20.18.0"
+  NPM_FLAGS = "--prefer-offline --no-audit --no-fund"
+  NODE_ENV = "production"
+  NETLIFY_CACHE_ID = "node-20-18-0"
+
+# Headers for admin access security
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+
+# Admin route redirect - must come before catch-all
+[[redirects]]
+  from = "/admin"
+  to = "/admin/"
+  status = 301
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+# API redirects
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# SPA catch-all redirect (must be last)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
+
+[context.branch-deploy.environment]
+  NODE_ENV = "development"

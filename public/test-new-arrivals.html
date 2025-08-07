@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Arrivals Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .section { margin-bottom: 30px; padding: 20px; border: 1px solid #ddd; }
+        .product { margin: 10px 0; padding: 10px; background: #f5f5f5; }
+        .new-arrival { background: #e8f5e9; }
+        .featured { background: #fff3e0; }
+    </style>
+</head>
+<body>
+    <h1>New Arrivals Feature Test</h1>
+    
+    <div class="section">
+        <h2>Test Results:</h2>
+        <div id="results">Testing...</div>
+    </div>
+
+    <script>
+        async function testNewArrivals() {
+            const resultsDiv = document.getElementById('results');
+            
+            try {
+                // Test the new arrivals endpoint
+                const newArrivalsResponse = await fetch('/api/products/new-arrivals');
+                const newArrivals = await newArrivalsResponse.json();
+                
+                // Test all products endpoint
+                const allProductsResponse = await fetch('/api/products');
+                const allProducts = await allProductsResponse.json();
+                
+                // Test featured products endpoint  
+                const featuredResponse = await fetch('/api/products/featured');
+                const featured = await featuredResponse.json();
+                
+                let html = `
+                    <h3>API Endpoints Test Results:</h3>
+                    <p><strong>Total Products:</strong> ${allProducts.length}</p>
+                    <p><strong>New Arrivals:</strong> ${newArrivals.length}</p>
+                    <p><strong>Featured Products:</strong> ${featured.length}</p>
+                    
+                    <h3>New Arrival Products:</h3>
+                `;
+                
+                newArrivals.forEach(product => {
+                    html += `
+                        <div class="product new-arrival">
+                            <strong>${product.name}</strong> - ₦${product.price}<br>
+                            <small>${product.category} | ${product.description}</small>
+                        </div>
+                    `;
+                });
+                
+                html += '<h3>Featured Products:</h3>';
+                featured.forEach(product => {
+                    html += `
+                        <div class="product featured">
+                            <strong>${product.name}</strong> - ₦${product.price}<br>
+                            <small>${product.category} | ${product.description}</small>
+                        </div>
+                    `;
+                });
+                
+                resultsDiv.innerHTML = html;
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+        
+        // Run test when page loads
+        testNewArrivals();
+    </script>
+</body>
+</html>

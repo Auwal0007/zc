@@ -1,0 +1,34 @@
+[
+  {
+    "id": "arabian",
+    "name": "Arabian Perfumes",
+    "description": "Rich, exotic fragrances with traditional Middle Eastern notes",
+    "image": "https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "featured": true,
+    "sortOrder": 0
+  },
+  {
+    "id": "english",
+    "name": "English Perfumes",
+    "description": "Classic floral and fresh scents with European elegance",
+    "image": "https://images.pexels.com/photos/1190829/pexels-photo-1190829.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "featured": true,
+    "sortOrder": 0
+  },
+  {
+    "id": "luxury",
+    "name": "Luxury Collection",
+    "description": "Premium fragrances for the most discerning tastes",
+    "image": "https://images.pexels.com/photos/1190829/pexels-photo-1190829.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "featured": true,
+    "sortOrder": 0
+  },
+  {
+    "id": "oil",
+    "name": "Oil Perfumes",
+    "description": "Pure, alcohol-free oil-based fragrances for lasting wear",
+    "image": "https://images.pexels.com/photos/6621496/pexels-photo-6621496.jpeg?auto=compress&cs=tinysrgb&w=800",
+    "featured": true,
+    "sortOrder": 0
+  }
+]

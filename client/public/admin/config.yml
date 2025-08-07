@@ -1,0 +1,80 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'Create {{collection}} "{{slug}}"'
+    update: 'Update {{collection}} "{{slug}}"'
+    delete: 'Delete {{collection}} "{{slug}}"'
+    uploadMedia: 'Upload "{{path}}"'
+    deleteMedia: 'Delete "{{path}}"'
+
+# Media configuration - optimized for better compatibility
+media_folder: "public/images/products"
+public_folder: "/images/products"
+
+collections:
+  - name: "products"
+    label: "Products"
+    folder: "src/content/products"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Product Name", name: "name", widget: "string", required: true}
+      - {label: "Product ID", name: "id", widget: "string", required: true, hint: "Unique identifier for the product"}
+      - {label: "Price", name: "price", widget: "number", required: true}
+      - {label: "Category", name: "category", widget: "select", options: ["arabian", "english", "oil", "luxury"], required: true}
+      - {label: "Description", name: "description", widget: "text", required: true}
+      - {label: "Images", name: "images", widget: "list", field: {label: "Image", name: "image", widget: "image"}, required: false, hint: "Add multiple product images"}
+      - {label: "Primary Image", name: "image", widget: "image", required: true, hint: "Main product image for display"}
+      - {label: "In Stock", name: "inStock", widget: "boolean", default: true}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false, hint: "Display this product in featured sections"}
+      - {label: "New Arrival", name: "newArrival", widget: "boolean", default: false, hint: "Mark this product as a new arrival"}
+      - {label: "Tags", name: "tags", widget: "list", field: {label: "Tag", name: "tag", widget: "string"}, required: false}
+      - {label: "Brand", name: "brand", widget: "string", required: false}
+      - {label: "Size", name: "size", widget: "string", required: false}
+      - {label: "Ingredients", name: "ingredients", widget: "text", required: false}
+      - {label: "Variants", name: "variants", widget: "list", required: false, fields: [
+          {label: "Size", name: "size", widget: "string"},
+          {label: "Color", name: "color", widget: "string"},
+          {label: "Price", name: "price", widget: "number"},
+          {label: "Stock", name: "stock", widget: "number", default: 0}
+        ]}
+
+  - name: "categories"
+    label: "Categories"
+    folder: "src/content/categories"
+    create: true
+    slug: "{{id}}"
+    fields:
+      - {label: "Category Name", name: "name", widget: "string", required: true}
+      - {label: "Category ID", name: "id", widget: "string", required: true, hint: "Unique identifier (e.g., arabian, english)"}
+      - {label: "Description", name: "description", widget: "text", required: true}
+      - {label: "Category Image", name: "image", widget: "image", required: true}
+      - {label: "Featured", name: "featured", widget: "boolean", default: false}
+      - {label: "Sort Order", name: "sortOrder", widget: "number", default: 0, required: false, hint: "Order for category display"}
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - file: "src/content/settings/general.md"
+        label: "General Settings"
+        name: "general"
+        fields:
+          - {label: "Site Title", name: "title", widget: "string", required: true}
+          - {label: "Site Description", name: "description", widget: "text", required: true}
+          - {label: "WhatsApp Number", name: "whatsapp", widget: "string", required: true, hint: "Include country code (e.g., +234...)"}
+          - {label: "Email Address", name: "email", widget: "string", required: true}
+          - {label: "Business Address", name: "address", widget: "text", required: true}
+          - {label: "Business Hours", name: "businessHours", widget: "text", required: false}
+          - {label: "Currency", name: "currency", widget: "string", default: "₦", required: false}
+          - {label: "Social Media", name: "social", widget: "object", fields: [
+              {label: "Facebook", name: "facebook", widget: "string", required: false},
+              {label: "Instagram", name: "instagram", widget: "string", required: false},
+              {label: "Twitter", name: "twitter", widget: "string", required: false},
+              {label: "WhatsApp", name: "whatsapp", widget: "string", required: false}
+            ]}
+          - {label: "SEO Settings", name: "seo", widget: "object", fields: [
+              {label: "Meta Keywords", name: "keywords", widget: "string", required: false},
+              {label: "Google Analytics ID", name: "googleAnalytics", widget: "string", required: false},
+              {label: "Meta Image", name: "metaImage", widget: "image", required: false}
+            ]}
