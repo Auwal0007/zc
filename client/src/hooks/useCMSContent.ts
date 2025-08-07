@@ -56,7 +56,7 @@ export function useCMSContent() {
       } else {
         // Fallback: Load from API
         try {
-          const response = await fetch('/api/products');
+          const response = await fetch('/.netlify/functions/api/products');
           if (response.ok) {
             const apiProducts = await response.json();
             setProducts(apiProducts);

@@ -14,7 +14,7 @@ const SearchResultsPage: React.FC = () => {
     enabled: query.length > 0,
     queryFn: () => {
       if (!query) return [];
-      return fetch(`/api/products/search?q=${encodeURIComponent(query)}`)
+      return fetch(`/.netlify/functions/api/products/search?q=${encodeURIComponent(query)}`)
         .then(res => res.json());
     },
   });

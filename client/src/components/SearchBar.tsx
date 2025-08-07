@@ -24,7 +24,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     enabled: query.length > 2,
     queryFn: () => {
       if (query.length <= 2) return [];
-      return fetch(`/api/products/search?q=${encodeURIComponent(query)}`)
+      return fetch(`/.netlify/functions/api/products/search?q=${encodeURIComponent(query)}`)
         .then(res => res.json());
     },
   });

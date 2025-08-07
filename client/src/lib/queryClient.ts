@@ -46,7 +46,7 @@ queryClient.setQueryDefaults(["api"], {
   queryFn: ({ queryKey }) => {
     // Convert query key array to URL path
     const [, ...pathParts] = queryKey as string[];
-    const url = `/api/${pathParts.join('/')}`;
+    const url = `/.netlify/functions/api/${pathParts.join('/')}`;
     return defaultFetcher(url);
   },
 });

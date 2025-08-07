@@ -1,12 +1,17 @@
 [build]
   publish = "dist/public"
-  command = "npm ci && node scripts/generateStaticContent.js && npm run build"
+  command = "npm ci && node scripts/generateStaticContent.js && npm run build:client"
 
 [build.environment]
   NODE_VERSION = "20.18.0"
   NPM_FLAGS = "--prefer-offline --no-audit --no-fund"
   NODE_ENV = "production"
   NETLIFY_CACHE_ID = "node-20-18-0-fix"
+
+# Function configuration
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 # Headers for admin access security
 [[headers]]
@@ -32,6 +37,7 @@
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+  force = true
 
 # SPA catch-all redirect (must be last)
 [[redirects]]
