@@ -10,6 +10,7 @@ class StaticContentGenerator {
   constructor() {
     this.contentDir = path.join(__dirname, '../src/content');
     this.outputDir = path.join(__dirname, '../src/data');
+    this.clientOutputDir = path.join(__dirname, '../client/src/data');
   }
 
   async generateProducts() {
@@ -230,13 +231,23 @@ class StaticContentGenerator {
     };
   }
 
+  async saveToMultipleLocations(filename, data) {
+    // Save to both src/data and client/src/data
+    const locations = [this.outputDir, this.clientOutputDir];
+    
+    for (const location of locations) {
+      if (!fs.existsSync(location)) {
+        fs.mkdirSync(location, { recursive: true });
+      }
+      
+      const filePath = path.join(location, filename);
+      fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+      console.log(`💾 Saved to: ${filePath}`);
+    }
+  }
+
   async generate() {
     console.log('🔄 Generating static content from CMS...');
-
-    // Ensure output directory exists
-    if (!fs.existsSync(this.outputDir)) {
-      fs.mkdirSync(this.outputDir, { recursive: true });
-    }
 
     try {
       const products = await this.generateProducts();
@@ -250,26 +261,14 @@ class StaticContentGenerator {
         count: products.length
       };
 
-      fs.writeFileSync(
-        path.join(this.outputDir, 'staticProducts.json'),
-        JSON.stringify(productsData, null, 2)
-      );
-
-      fs.writeFileSync(
-        path.join(this.outputDir, 'staticCategories.json'),
-        JSON.stringify(categories, null, 2)
-      );
-
-      fs.writeFileSync(
-        path.join(this.outputDir, 'staticSettings.json'),
-        JSON.stringify(settings, null, 2)
-      );
+      await this.saveToMultipleLocations('staticProducts.json', productsData);
+      await this.saveToMultipleLocations('staticCategories.json', categories);
+      await this.saveToMultipleLocations('staticSettings.json', settings);
 
       console.log('✅ Static content generated successfully!');
       console.log(`📦 Generated ${products.length} products`);
       console.log(`📂 Generated ${categories.length} categories`);
       console.log('⚙️ Generated site settings');
-      console.log(`💾 Output saved to: ${this.outputDir}`);
 
     } catch (error) {
       console.error('❌ Error generating static content:', error);

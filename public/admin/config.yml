@@ -17,7 +17,7 @@ collections:
     label: "Products"
     folder: "src/content/products"
     create: true
-    slug: "{{id}}"
+    slug: "{{slug}}"
     fields:
       - {label: "Product Name", name: "name", widget: "string", required: true}
       - {label: "Product ID", name: "id", widget: "string", required: true, hint: "Unique identifier for the product"}

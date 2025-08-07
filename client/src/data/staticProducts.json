@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 4642,
+      "id": 9640,
       "name": "English Rose Garden",
       "price": "18000",
       "category": "english",
@@ -11,27 +11,17 @@
       "newArrival": true
     },
     {
-      "id": 1938,
-      "name": "nice perfume",
-      "price": "10000",
-      "category": "luxury",
-      "description": "Onboding \nCommunication\nHow they handle enquiries \n",
-      "image": "/images/products/screenshot.png",
-      "featured": true,
-      "newArrival": true
+      "id": 1234,
+      "name": "Atamfa",
+      "price": "65465",
+      "category": "arabian",
+      "description": "git pull origin main --allow-unrelated-histories",
+      "image": "/images/products/vlcsnap-2025-01-15-12h30m11s661.png",
+      "featured": false,
+      "newArrival": false
     },
     {
-      "id": 455,
-      "name": "Sauge perfum",
-      "price": "10000",
-      "category": "english",
-      "description": "Also wil give the ‘em how they should spend each time they have at the hub",
-      "image": "/images/products/vlcsnap-2025-01-16-12h42m51s416.png",
-      "featured": true,
-      "newArrival": true
-    },
-    {
-      "id": 6499,
+      "id": 8036,
       "name": "Royal Oud Collection",
       "price": "25000",
       "category": "arabian",
@@ -41,6 +31,6 @@
       "newArrival": false
     }
   ],
-  "lastGenerated": "2025-08-06T09:05:02.211Z",
-  "count": 4
+  "lastGenerated": "2025-08-07T05:31:48.440Z",
+  "count": 3
 }

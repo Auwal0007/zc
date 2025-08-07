@@ -39,7 +39,7 @@ export class MemStorage implements IStorage {
   private loadCMSProducts() {
     try {
       // Load products from CMS-generated static content
-      const staticProductsPath = join(process.cwd(), 'client/src/data/staticProducts.json');
+      const staticProductsPath = join(process.cwd(), 'src/data/staticProducts.json');
       const staticProducts = JSON.parse(readFileSync(staticProductsPath, 'utf-8'));
       
       if (staticProducts.products && Array.isArray(staticProducts.products)) {

@@ -1,12 +1,12 @@
 [build]
   publish = "dist/public"
-  command = "npm ci && node scripts/generateStaticContent.js && cp -r src/data client/src/ && npm run build:client && npm run build:function"
+  command = "npm ci && node scripts/generateStaticContent.js && npm run build"
 
 [build.environment]
   NODE_VERSION = "20.18.0"
   NPM_FLAGS = "--prefer-offline --no-audit --no-fund"
   NODE_ENV = "production"
-  NETLIFY_CACHE_ID = "node-20-18-0"
+  NETLIFY_CACHE_ID = "node-20-18-0-fix"
 
 # Headers for admin access security
 [[headers]]
