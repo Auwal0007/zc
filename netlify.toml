@@ -6,7 +6,6 @@
   NODE_VERSION = "20.18.0"
   NPM_FLAGS = "--prefer-offline --no-audit --no-fund"
   NODE_ENV = "production"
-  NETLIFY_CACHE_ID = "node-20-18-0-fix"
 
 # Function configuration
 [functions]
@@ -32,7 +31,7 @@
   to = "/admin/index.html"
   status = 200
 
-# API redirects
+# API redirects - these are critical for the functions to work
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"

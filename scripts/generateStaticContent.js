@@ -232,8 +232,8 @@ class StaticContentGenerator {
   }
 
   async saveToMultipleLocations(filename, data) {
-    // Save to both src/data and client/src/data
-    const locations = [this.outputDir, this.clientOutputDir];
+    // Save to src/data and copy to client/src/data during build
+    const locations = [this.outputDir];
     
     for (const location of locations) {
       if (!fs.existsSync(location)) {
@@ -244,6 +244,14 @@ class StaticContentGenerator {
       fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
       console.log(`💾 Saved to: ${filePath}`);
     }
+    
+    // Also save to client/src/data for build
+    if (!fs.existsSync(this.clientOutputDir)) {
+      fs.mkdirSync(this.clientOutputDir, { recursive: true });
+    }
+    const clientFilePath = path.join(this.clientOutputDir, filename);
+    fs.writeFileSync(clientFilePath, JSON.stringify(data, null, 2));
+    console.log(`💾 Copied to: ${clientFilePath}`);
   }
 
   async generate() {

@@ -5,7 +5,7 @@ const serverless = require('serverless-http');
 const app = express();
 app.use(express.json());
 
-// Sample products data - this should match your actual data structure
+// Sample products data that matches your schema
 const allProducts = [
   {
     id: 1,
@@ -96,14 +96,14 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   
   if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
+    return res.sendStatus(200);
   }
+  next();
 });
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
+  console.log('Health check called');
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 

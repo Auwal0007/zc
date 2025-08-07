@@ -56,17 +56,45 @@ export function useCMSContent() {
       } else {
         // Fallback: Load from API
         try {
+          console.log('🌐 Attempting to load from API...');
           const response = await fetch('/.netlify/functions/api/products');
+          console.log('API Response status:', response.status);
+          
           if (response.ok) {
             const apiProducts = await response.json();
             setProducts(apiProducts);
             console.log(`🌐 Using API products: ${apiProducts.length} items`);
           } else {
-            throw new Error('API request failed');
+            console.error('API request failed with status:', response.status);
+            throw new Error(`API request failed: ${response.status}`);
           }
         } catch (apiError) {
-          console.error('❌ Both static and API loading failed:', apiError);
-          setProducts([]);
+          console.error('❌ API loading failed:', apiError);
+          // Use hardcoded fallback data
+          const fallbackProducts = [
+            {
+              id: 1,
+              name: 'Royal Oud Collection',
+              price: '25000',
+              image: 'https://images.pexels.com/photos/965989/pexels-photo-965989.jpeg?auto=compress&cs=tinysrgb&w=800',
+              category: 'arabian',
+              description: 'Premium Arabian oud perfume with rich, woody notes and exotic spices.',
+              featured: true,
+              newArrival: false
+            },
+            {
+              id: 2,
+              name: 'English Rose Garden',
+              price: '18000',
+              image: 'https://images.pexels.com/photos/1190829/pexels-photo-1190829.jpeg?auto=compress&cs=tinysrgb&w=800',
+              category: 'english',
+              description: 'Elegant English perfume with fresh rose petals and bergamot.',
+              featured: true,
+              newArrival: true
+            }
+          ];
+          setProducts(fallbackProducts);
+          console.log('🔄 Using hardcoded fallback products');
         }
       }
 

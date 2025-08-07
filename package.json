@@ -5,17 +5,17 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_ENV=development tsx server/index.ts",
-    "prebuild": "node scripts/generateStaticContent.js && cp -r src/data client/src/",
-    "build": "npm ci && npm run prebuild && npx vite build && npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "build:netlify": "echo 'Building with Node $(node --version)' && node scripts/generateStaticContent.js && cp -r src/data client/src/ && npm run build:client",
-    "build:client": "node scripts/generateStaticContent.js && cp -r src/data client/src/ && vite build",
+    "prebuild": "node scripts/generateStaticContent.js",
+    "build": "npm run prebuild && npx vite build",
+    "build:netlify": "echo 'Building with Node $(node --version)' && npm run build:client",
+    "build:client": "node scripts/generateStaticContent.js && vite build",
     "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "db:push": "drizzle-kit push",
     "generate-content": "node scripts/generateStaticContent.js && cp -r src/data client/src/",
     "deploy": "npm run build && netlify deploy --prod",
-    "cms:sync": "node scripts/generateStaticContent.js && cp -r src/data client/src/ && git add src/data/*.json client/src/data/*.json && git diff --staged --quiet || (git commit -m 'chore: update CMS content' && git push)"
+    "cms:sync": "node scripts/generateStaticContent.js && git add src/data/*.json && git diff --staged --quiet || (git commit -m 'chore: update CMS content' && git push)"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
