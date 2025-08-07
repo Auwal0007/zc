@@ -4,17 +4,13 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsx server/index.ts",
+    "dev": "vite",
     "prebuild": "node scripts/generateStaticContent.js",
-    "build": "npm run prebuild && npx vite build",
-    "build:netlify": "echo 'Building with Node $(node --version)' && npm run build:client",
+    "build": "npm run prebuild && vite build",
     "build:client": "node scripts/generateStaticContent.js && vite build",
-    "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "preview": "vite preview",
     "check": "tsc",
-    "db:push": "drizzle-kit push",
     "generate-content": "node scripts/generateStaticContent.js && cp -r src/data client/src/",
-    "deploy": "npm run build && netlify deploy --prod",
     "cms:sync": "node scripts/generateStaticContent.js && git add src/data/*.json && git diff --staged --quiet || (git commit -m 'chore: update CMS content' && git push)"
   },
   "dependencies": {

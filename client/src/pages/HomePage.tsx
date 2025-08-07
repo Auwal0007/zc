@@ -1,21 +1,14 @@
 import Hero from '../components/Hero';
 import ProductGrid from '../components/ProductGrid';
 import CategoryShowcase from '../components/CategoryShowcase';
-import { useQuery } from '@tanstack/react-query';
-import { Product } from '@shared/schema';
+import { useCMSContent } from '../hooks/useCMSContent';
 import { useState } from 'react';
 
 export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const { data: products = [], isLoading } = useQuery<Product[]>({
-    queryKey: ['api', 'products'],
-  });
-
-  const { data: newArrivals = [] } = useQuery<Product[]>({
-    queryKey: ['api', 'products', 'new-arrivals'],
-  });
+  const { products, newArrivals, loading } = useCMSContent();
 
   // Filter products based on search and category
   const filteredProducts = products.filter(product => {
@@ -27,7 +20,7 @@ export default function HomePage() {
     return matchesCategory && matchesSearch;
   });
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-cream-50 to-cream-100 flex items-center justify-center">
         <div className="text-xl">Loading products...</div>

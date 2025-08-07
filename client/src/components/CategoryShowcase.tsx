@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
-import { Product } from '@shared/schema';
+import { useCMSContent } from '../hooks/useCMSContent';
 
 interface CategoryShowcaseProps {
   title?: string;
@@ -10,9 +9,7 @@ interface CategoryShowcaseProps {
 const CategoryShowcase: React.FC<CategoryShowcaseProps> = ({ 
   title = "Shop by Category" 
 }) => {
-  const { data: products = [] } = useQuery<Product[]>({
-    queryKey: ['api', 'products'],
-  });
+  const { products } = useCMSContent();
 
   const categories = [
     {

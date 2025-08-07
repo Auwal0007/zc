@@ -1,19 +1,16 @@
 import { useParams } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
+import { useCMSContent } from '../hooks/useCMSContent';
 import { MessageCircle, Star, Plus, Minus, Heart, Share2, ArrowLeft } from 'lucide-react';
 import { Link } from 'wouter';
 import { useState } from 'react';
-import { Product } from '@shared/schema';
 
 export default function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
+  const { products, loading, error } = useCMSContent();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const { data: product, isLoading, error } = useQuery<Product>({
-    queryKey: ['api', 'products', id],
-    enabled: !!id,
-  });
+  const product = products.find(p => p.id === parseInt(id || '0'));
 
   const formatPrice = (price: string) => {
     const numPrice = parseFloat(price);
@@ -101,7 +98,7 @@ export default function ProductDetailPage() {
     product?.image || '',
   ];
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-cream-50 to-cream-100 flex items-center justify-center">
         <div className="text-xl">Loading product...</div>

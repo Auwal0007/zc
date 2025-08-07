@@ -1,17 +1,14 @@
 import { useParams } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
-import { Product } from '@shared/schema';
+import { useCMSContent } from '../hooks/useCMSContent';
 import ProductGrid from '../components/ProductGrid';
 
 export default function CategoryPage() {
   const { category } = useParams<{ category: string }>();
+  const { products, loading, error, getProductsByCategory } = useCMSContent();
 
-  const { data: products = [], isLoading, error } = useQuery<Product[]>({
-    queryKey: ['api', 'products', 'category', category],
-    enabled: !!category, // Only run query if category exists
-  });
+  const categoryProducts = category ? getProductsByCategory(category) : products;
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="container mx-auto px-4 py-6 sm:py-8">
         <div className="flex items-center justify-center min-h-64">
@@ -48,7 +45,7 @@ export default function CategoryPage() {
     <div className="container mx-auto px-3 sm:px-4 py-6 sm:py-8">
       <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center text-burgundy-900 px-2">{categoryTitle}</h1>
       <ProductGrid 
-        products={products}
+        products={categoryProducts}
         searchQuery=""
         selectedCategory={category || 'all'}
         showFeatured={false}

@@ -7,19 +7,6 @@
   NPM_FLAGS = "--prefer-offline --no-audit --no-fund"
   NODE_ENV = "production"
 
-# Function configuration
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-
-# Headers for admin access security
-[[headers]]
-  for = "/admin/*"
-  [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-
 # Admin route redirect - must come before catch-all
 [[redirects]]
   from = "/admin"
@@ -30,13 +17,6 @@
   from = "/admin/*"
   to = "/admin/index.html"
   status = 200
-
-# API redirects - these are critical for the functions to work
-[[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
-  status = 200
-  force = true
 
 # SPA catch-all redirect (must be last)
 [[redirects]]

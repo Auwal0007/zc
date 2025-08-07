@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { Route, Switch } from 'wouter';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from './lib/queryClient';
 import Header from './components/Header';
 import Footer from './components/Footer';
 // import WhatsAppFloat from './components/WhatsAppFloat';
@@ -23,7 +21,6 @@ function App() {
   const [showAdminPanel, setShowAdminPanel] = useState(false);
 
   return (
-    <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-gradient-to-br from-cream-50 to-cream-100">
         <ScrollToTop />
         {/* <UrgencyTicker /> */}
@@ -57,7 +54,6 @@ function App() {
         <CMSAdminLink />
         {showAdminPanel && <AdminPanel />}
       </div>
-    </QueryClientProvider>
   );
 }
 

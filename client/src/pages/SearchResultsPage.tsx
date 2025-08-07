@@ -1,33 +1,14 @@
 import React from 'react';
-import { useParams } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
-import { Product } from '@shared/schema';
+import { useCMSContent } from '../hooks/useCMSContent';
 import ProductGrid from '../components/ProductGrid';
 import { Search } from 'lucide-react';
 
 const SearchResultsPage: React.FC = () => {
   const params = new URLSearchParams(window.location.search);
   const query = params.get('q') || '';
+  const { searchProducts } = useCMSContent();
 
-  const { data: searchResults = [], isLoading } = useQuery<Product[]>({
-    queryKey: ['api', 'products', 'search', query],
-    enabled: query.length > 0,
-    queryFn: () => {
-      if (!query) return [];
-      return fetch(`/.netlify/functions/api/products/search?q=${encodeURIComponent(query)}`)
-        .then(res => res.json());
-    },
-  });
-
-  if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center min-h-64">
-          <div className="text-xl">Searching for "{query}"...</div>
-        </div>
-      </div>
-    );
-  }
+  const searchResults = query ? searchProducts(query) : [];
 
   return (
     <div className="container mx-auto px-4 py-8">

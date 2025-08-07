@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { useLocation } from 'wouter';
-import { useQuery } from '@tanstack/react-query';
-import { Product } from '@shared/schema';
+import { useCMSContent } from '../hooks/useCMSContent';
+import { Product } from '../../../shared/schema';
 
 interface SearchBarProps {
   onSearchResults?: (results: Product[]) => void;
@@ -17,17 +17,10 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const { searchProducts } = useCMSContent();
   const [, setLocation] = useLocation();
 
-  const { data: searchResults = [], isLoading } = useQuery<Product[]>({
-    queryKey: ['api', 'products', 'search', query],
-    enabled: query.length > 2,
-    queryFn: () => {
-      if (query.length <= 2) return [];
-      return fetch(`/.netlify/functions/api/products/search?q=${encodeURIComponent(query)}`)
-        .then(res => res.json());
-    },
-  });
+  const searchResults = query.length > 2 ? searchProducts(query) : [];
 
   useEffect(() => {
     if (onSearchResults && searchResults) {
@@ -81,11 +74,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       {/* Search Results Dropdown */}
       {isSearching && query.length > 2 && (
         <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
-          {isLoading ? (
-            <div className="p-4 text-center text-gray-500">
-              Searching...
-            </div>
-          ) : searchResults.length > 0 ? (
+          {searchResults.length > 0 ? (
             <div className="py-2">
               {searchResults.slice(0, 5).map((product) => (
                 <button
